@@ -10,7 +10,7 @@ public class ShoeLoader {
         ) {
             ResultSet resultSet = statement.executeQuery("select * from sko");
             while (resultSet.next()) {
-            Shoe shoe = new Shoe();
+            final Shoe shoe = new Shoe();
             shoe.setId(resultSet.getInt("id"));
             shoe.setBrand(resultSet.getString("märke"));
             shoe.setModelName(resultSet.getString("modellnamn"));

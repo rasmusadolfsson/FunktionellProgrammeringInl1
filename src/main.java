@@ -1,5 +1,3 @@
-import com.mysql.cj.protocol.Resultset;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -40,9 +38,13 @@ public class main {
 
                     System.out.println(customerId);
                 }
+                if(customerId == -1){
+                    System.out.println("Felaktigt namn eller lösenord!");
+                    break;
+                }
                 ShoeLoader shoeLoader = new ShoeLoader(connection);
 
-                shoeLoader.shoeList.stream().forEach(s -> System.out.println(s.getId() + " - " + s.getBrand() + " - " + s.getModelName() + " - " + s.getPrice() + " - " +
+                shoeLoader.shoeList.stream().filter(a -> a.getAmount() > 0).forEach(s -> System.out.println(s.getId() + " - " + s.getBrand() + " - " + s.getModelName() + " - " + s.getPrice() + " - " +
                         s.getAmount() + " - " + s.getColour() + " - " + s.getSize()));
 
                 int shoeChoice;
@@ -74,7 +76,6 @@ public class main {
                         e.printStackTrace();
                     }
                 } else {
-                    //Bryt ut till metod
                     try {
                         callableStatement.setInt(1, customerId);
                         callableStatement.setString(2, null);
