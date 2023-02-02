@@ -97,7 +97,7 @@ public class main {
         }
     }
 
-    public static void main(String[] args) {
-        main main = new main();
-    }
+//    public static void main(String[] args) {
+//        main main = new main();
+//    }
 }
