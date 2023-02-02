@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderLoader {
-    private List<Order> orderList = new ArrayList<>();
-    private List<Customer> customerList;
+    private final List<Order> orderList = new ArrayList<>();
+    private final List<Customer> customerList;
     OrderLoader(Connection connection, List<Customer> customerList) {
         try (
                 Statement statement = connection.createStatement();

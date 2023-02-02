@@ -7,10 +7,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Vgmain {
-    List<Shoe> shoeList;
-    List<Customer> customerList;
-    List<Order> orderList;
-    List<OrderShoeMap> orderShoeMapList;
+    private List<Shoe> shoeList;
+    private List<Customer> customerList;
+    private List<Order> orderList;
+    private List<OrderShoeMap> orderShoeMapList;
 
     Vgmain(){
 
@@ -28,7 +28,7 @@ public class Vgmain {
                 properties.getProperty("password"));
         ){
             ShoeLoader shoeLoader = new ShoeLoader(connection);
-            shoeList = shoeLoader.shoeList;
+            shoeList = shoeLoader.getShoeList();
             CustomerLoader customerLoader = new CustomerLoader(connection);
             customerList = customerLoader.getCustomerList();
             OrderLoader orderLoader = new OrderLoader(connection, customerList);
@@ -52,41 +52,36 @@ public class Vgmain {
             default -> System.out.println(choice + " är inte ett giltigt alternativ");
         }
     }
+    private final ShoeInterface sizeSearch = (s, w) -> s.getSize() == Integer.parseInt(w);
+    private final ShoeInterface colourSearch = (s, w) -> s.getColour().equalsIgnoreCase(w);
+    private final ShoeInterface brandSearch = (s, w) -> s.getBrand().equalsIgnoreCase(w);
+    public void searchBy(String searchWord, ShoeInterface shoeInterface){
+        orderShoeMapList.stream().filter(s -> shoeInterface.search(s.getShoe(), searchWord))
+                .forEach(a -> System.out.println(a.getOrder().getCustomer().getName()+ " - "+a.getOrder().getCustomer().getAddress()));
+    }
 
     public void RapOne(Scanner scanner){
         System.out.println("Vill du söka på:\n1 - Storlek\n2 - Färg\n3 - Märke");
         int choice = scanner.nextInt();
-        int searchInt = 0;
-        String searchWord = null;
+        int searchInt;
+        String searchWord;
         switch (choice) {
             case 1 -> {
                 System.out.println("Skriv storlek att söka efter: ");
                 searchInt = scanner.nextInt();
+                searchBy(String.valueOf(searchInt), sizeSearch);
             }
             case 2 -> {
                 System.out.println("Skriv färg att söka efter: ");
                 searchWord = scanner.next().trim();
+                searchBy(searchWord, colourSearch);
             }
             case 3 -> {
                 System.out.println("Skriv märke att söka efter: ");
                 searchWord = scanner.next().trim();
+                searchBy(searchWord, brandSearch);
             }
             default -> System.out.println("Något gick fel!");
-        }
-        String finalSearchWord = searchWord;
-        switch (choice){
-            case 1:
-                int finalSearchInt = searchInt;
-                orderShoeMapList.stream().filter(a -> a.getShoe().getSize() == finalSearchInt).forEach(a -> System.out.println(a.getOrder().getCustomer().getName()+ " - " +a.getOrder().getCustomer().getAddress()));
-                break;
-            case 2:
-                orderShoeMapList.stream().filter(a -> a.getShoe().getColour().equalsIgnoreCase(finalSearchWord)).forEach(a -> System.out.println(a.getOrder().getCustomer().getName()+ " - " +a.getOrder().getCustomer().getAddress()));
-                break;
-            case 3:
-                orderShoeMapList.stream().filter(a -> a.getShoe().getBrand().equalsIgnoreCase(finalSearchWord)).forEach(a -> System.out.println(a.getOrder().getCustomer().getName()+ " - " +a.getOrder().getCustomer().getAddress()));
-                break;
-            default:
-                System.out.println(choice + " är inte ett giltigt alternativ!");
         }
     }
 

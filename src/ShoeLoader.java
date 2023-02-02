@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoeLoader {
-    public List<Shoe> shoeList = new ArrayList<>();
+    private final List<Shoe> shoeList = new ArrayList<>();
     ShoeLoader(Connection connection) {
         try (
                 Statement statement = connection.createStatement()
@@ -24,8 +24,10 @@ public class ShoeLoader {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
+    public List<Shoe> getShoeList(){
+        return shoeList;
     }
     private String getColourFromId(int id){
         return switch (id) {

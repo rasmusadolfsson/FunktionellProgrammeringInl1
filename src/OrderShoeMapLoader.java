@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderShoeMapLoader {
-    private List<OrderShoeMap> orderShoeMapList = new ArrayList<>();
-    private List<Order> orderList;
-    private List<Shoe> shoeList;
+    private final List<OrderShoeMap> orderShoeMapList = new ArrayList<>();
+    private final List<Order> orderList;
+    private final List<Shoe> shoeList;
 
     OrderShoeMapLoader(Connection connection, List<Shoe> shoeList, List<Order> orderList) {
         try (

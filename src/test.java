@@ -36,7 +36,7 @@ public class test {
                 }else System.out.println("Fel namn eller lösenord!");
             }
             ShoeLoader shoeLoader = new ShoeLoader(connection);
-            shoeLoader.shoeList.stream().filter(a -> a.getAmount() > 0).forEach(s -> System.out.println(s.getId() + " - " + s.getBrand() + " - " + s.getModelName() + " - " + s.getPrice() + " - " +
+            shoeLoader.getShoeList().stream().filter(a -> a.getAmount() > 0).forEach(s -> System.out.println(s.getId() + " - " + s.getBrand() + " - " + s.getModelName() + " - " + s.getPrice() + " - " +
                     s.getAmount() + " - " + s.getColour() + " - " + s.getSize()));
 
             int shoeChoice;
